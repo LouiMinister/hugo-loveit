@@ -22,6 +22,15 @@
         <a href="{{ .RelPermalink }}">{{ .Title | emojify }}</a>
     </h1>
 
+    {{- /* Summary content */ -}}
+    <div class="content">
+        {{- with .Summary -}}
+        {{- dict "Content" . "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
+        {{- else -}}
+        {{- .Description | safeHTML -}}
+        {{- end -}}
+    </div>
+
     {{- /* Meta */ -}}
     <div class="post-meta">
         {{- $author := $params.author | default .Site.Author.name | default (T "author") -}}
@@ -46,15 +55,6 @@
             &nbsp;<span class="post-category">
                 {{- dict "Categories" . | T "includedInCategories" | safeHTML -}}
             </span>
-        {{- end -}}
-    </div>
-
-    {{- /* Summary content */ -}}
-    <div class="content">
-        {{- with .Summary -}}
-            {{- dict "Content" . "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
-        {{- else -}}
-            {{- .Description | safeHTML -}}
         {{- end -}}
     </div>
 
